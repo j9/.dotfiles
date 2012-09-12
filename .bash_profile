@@ -75,7 +75,7 @@ ${PROMPT_COLOR}\\$ ${DFLT_COLOR}"
 }
 
 # prompt
-export PROMPT_COMMAND=_prompt_command
+export PROMPT_COMMAND=$(_prompt_command)
 export PS1=$(_ps1)
 
 # git autocomplete
