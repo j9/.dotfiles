@@ -18,5 +18,3 @@
   who = shortlog -e -s -n 
 [merge]
   conflictstyle = diff3
-[include]
-  path = ~/.gitconfig.github
