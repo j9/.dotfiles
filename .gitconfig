@@ -18,6 +18,5 @@
   who = shortlog -e -s -n 
 [merge]
   conflictstyle = diff3
-[github]
-	user = j9
-	token = 3bce5fb96eb9134ec3d0f5e371552981
+[include]
+  path = ~/.gitconfig.github
