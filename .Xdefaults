@@ -1,0 +1,63 @@
+Xft.dpi:		96
+Xft.antialias:		true
+Xft.hinting:		Full
+
+URxvt.loginShell:	true
+
+URxvt.cursorBlink:	true
+URxvt.cursorColor:      #657b83
+URxvt.cursorUnderline:  false
+
+URxvt.pointerBlank:	true
+
+URxvt.scrollBar:	true
+URxvt.scrollstyle:      plain
+
+
+URxvt.allow_bold:	false
+URxvt.font: 		xft:Monospace:pixelsize=12
+
+URxvt.perl-lib: /home/j9/.urxvt/urxvt-perls
+
+URxvt.perl-ext-common: tabbedex,keyboard-select,clipboard,url-select
+
+URxvt.tabbed.autohide:   true
+URxvt.tabbed.reopen-on-close: false
+
+URxvt.keysym.M-Escape: perl:keyboard-select:activate
+
+URxvt.keysym.M-c: perl:clipboard:copy
+URxvt.keysym.M-v: perl:clipboard:paste
+URxvt.keysym.M-C-v: perl:clipboard:paste_escaped
+
+URxvt.clipboard.copycmd: xclip -i -selection clipboard
+URxvt.clipboard.pastecmd: xclip -o -selection clipboard
+
+URxvt.url-select.underline: true
+URxvt.url-select.launcher: chromium
+
+
+!! modified Zenburn theme
+URxvt*termName: rxvt-256color
+URxvt*xftAntialias: true
+URxvt*background: #3f3f3f
+URxvt*foreground: #dcdccc
+URxvt*cursorColor: #aaaaaa
+URxvt*colorUL: #dc6060
+URxvt*underlineColor: #dfaf8f
+URxvt*color0: #3f3f3f
+URxvt*color1: #cc9393
+URxvt*color2: #7f9f7f
+URxvt*color3: #d0bf8f
+URxvt*color4: #6ca0a3
+URxvt*color5: #dc8cc3
+URxvt*color6: #93e0e3
+URxvt*color7: #dcdccc
+URxvt*color8: #000000
+URxvt*color9: #dca3a3
+URxvt*color10: #bfebbf
+URxvt*color11: #f0dfaf
+URxvt*color12: #8cd0d3
+URxvt*color13: #dc8cc3
+URxvt*color14: #93e0e3
+URxvt*color15: #ffffff

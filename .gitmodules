@@ -1,0 +1,9 @@
+[submodule ".urxvt/urxvt-perls"]
+	path = .urxvt/urxvt-perls
+	url = https://github.com/muennich/urxvt-perls.git
+[submodule ".config/awesome/vicious"]
+	path = .config/awesome/vicious
+	url = http://git.sysphere.org/vicious
+[submodule ".config/awesome/revelation"]
+	path = .config/awesome/revelation
+	url = https://github.com/bioe007/awesome-revelation.git

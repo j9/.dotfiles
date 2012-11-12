@@ -1,0 +1,12 @@
+Setup & Install
+----------------------------------
+To sync dotfiles use python 'dotfiles' package, which can be found here
+
+  https://github.com/jbernard/dotfiles
+  http://pypi.python.org/pypi/dotfiles
+
+Remove broken symlinks
+----------------------------------
+When testing dotfile linking, this might become handy:
+
+  $ find -L /etc/ssl/certs -type l -delete

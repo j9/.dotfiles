@@ -1,0 +1,15 @@
+[dotfiles]
+
+prefix = .
+
+repository = ~/.dotfiles
+
+ignore = [
+    '.dotfilesrc',
+    '.git',
+    '.gitignore',
+    '.gitmodules',
+    'README',
+    '*.swp']
+
+externals = {}
