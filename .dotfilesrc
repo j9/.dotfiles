@@ -5,11 +5,16 @@ prefix = .
 repository = ~/.dotfiles
 
 ignore = [
-    '.dotfilesrc',
-    '.git',
-    '.gitignore',
-    '.gitmodules',
-    'README',
-    '*.swp']
+  '.dotfilesrc',
+  '.git',
+  '.gitignore',
+  '.gitmodules',
+  '.config',
+  'README',
+  '*.swp']
 
-externals = {}
+# hack for link only shown dirs under .config
+# not the whole thing, should add the base directory
+# to ignores as well
+externals = {
+  '.config/awesome': '~/.dotfiles/.config/awesome'}

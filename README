@@ -9,4 +9,6 @@ Remove broken symlinks
 ----------------------------------
 When testing dotfile linking, this might become handy:
 
-  $ find -L /etc/ssl/certs -type l -delete
+  $ find -L . -type l -delete
+
+Find all broken links in current directory and all subdirectories.
