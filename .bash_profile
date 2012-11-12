@@ -1,4 +1,8 @@
+# aliases
 alias reload_profile='source ~/.bash_profile'
+alias la='ls -lA'
+alias ll='ls -l'
+alias cds='cd -P'
 
 # history
 set -o noclobber
