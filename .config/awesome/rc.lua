@@ -157,10 +157,11 @@ mytasklist.buttons = awful.util.table.join(
 cpu_widget = awful.widget.graph()
 -- -- Graph properties
 cpu_widget:set_width(50)
---cpu_widget:set_height(13)
+cpu_widget:set_height(10)
 cpu_widget:set_background_color("#494B4F")
 cpu_widget:set_color("#FF5656")
 cpu_widget:set_gradient_colors({ "#FF5656", "#88A175", "#AECF96" })
+awful.widget.layout.margins[cpu_widget.widget] = { top = 5, bottom = 5, right = 4 }
 -- -- Register widget
 vicious.register(cpu_widget, vicious.widgets.cpu, "$1")
 
