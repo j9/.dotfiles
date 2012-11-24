@@ -1,8 +1,23 @@
-# aliases
 alias reload_profile='source ~/.bash_profile'
-alias la='ls -lA'
-alias ll='ls -l'
-alias cds='cd -P'
+
+
+_load_file_if_exists()
+{
+  file=$1
+  if [[ -r ${file} ]] ; then
+    . ${file}
+  fi
+}
+
+# to enable '__git_ps1'
+_load_file_if_exists ${HOME}/'.dotfiles/.scripts/git-prompt'
+
+# __git_ps1 prompt config
+export GIT_PS1_SHOWDIRTYSTATE=true
+export GIT_PS1_SHOWSTASHSTATE=true
+export GIT_PS1_SHOWUPSTREAM='auto'
+export GIT_PS1_SHOWUNTRACKEDFILES=true
+
 
 # history
 set -o noclobber
@@ -73,7 +88,7 @@ ${BRACKET_COLOR}[${DATE_COLOR}\D{%H:%M:%S %Y/%m/%d}${BRACKET_COLOR}]\
  \[${COLOR_LIGHTGREEN}\]h:${HIST_COLOR}\!${BRACKET_COLOR}]\
  ${BRACKET_COLOR}[${USER_COLOR}\u@\h\[${COLOR_DEFAULT}\]\
  \[${COLOR_LIGHTBLUE}\]\w${BRACKET_COLOR}]\[${COLOR_DEFAULT}\]\
- \[${COLOR_PINK}\]$(__git_ps1 "(%s)")\
+ \[${COLOR_PINK}\]"'$(__git_ps1 "(%s)")'"\
 \n\
 ${PROMPT_COLOR}\\$ ${DFLT_COLOR}"
 }
@@ -82,19 +97,5 @@ ${PROMPT_COLOR}\\$ ${DFLT_COLOR}"
 export PROMPT_COMMAND=$(_prompt_command)
 export PS1=$(_ps1)
 
-# git autocomplete
-export GIT_PS1_SHOWDIRTYSTATE=true
-export GIT_PS1_SHOWSTASHSTATE=true
-export GIT_PS1_SHOWUPSTREAM='auto'
-export GIT_PS1_SHOWUNTRACKEDFILES=true
-
-
-_load_file_if_exists()
-{
-  file=$1
-  if [[ -r ${file} ]] ; then
-    . ${file}
-  fi
-}
 
 _load_file_if_exists ${HOME}/'.bashrc'
