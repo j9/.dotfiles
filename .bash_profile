@@ -10,7 +10,7 @@ _load_file_if_exists()
 }
 
 # to enable '__git_ps1'
-_load_file_if_exists ${HOME}/'.dotfiles/.scripts/git-prompt'
+_load_file_if_exists ${HOME}/'.scripts/git-prompt'
 
 # __git_ps1 prompt config
 export GIT_PS1_SHOWDIRTYSTATE=true
