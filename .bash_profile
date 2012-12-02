@@ -30,6 +30,9 @@ shopt -s cdspell
 shopt -s cmdhist
 shopt -s histappend
 
+# disable flow control
+stty -ixon
+
 hist()
 {
   cnt=10
