@@ -78,7 +78,7 @@ layouts =
 tags = {}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[1])
+    tags[s] = awful.tag({ 1, 2, 3, 4 }, s, layouts[1])
 end
 -- }}}
 
@@ -87,12 +87,23 @@ end
 myawesomemenu = {
    { "manual", terminal .. " -e man awesome" },
    { "edit config", editor_cmd .. " " .. awesome.conffile },
-   { "restart", awesome.restart },
+   { "&restart", awesome.restart },
    { "quit", awesome.quit }
 }
 
-mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "open terminal", terminal }
+bin_gvim        = "gvim"
+bin_chromium    = "chromium"
+bin_lock_screen = "xscreensaver-command -lock"
+bin_file_mng    = "pcmanfm ~"
+bin_fpm2        = "fpm2"
+
+mymainmenu = awful.menu({ items = { { "&awesome", myawesomemenu, beautiful.awesome_icon },
+                                    { "&terminal", terminal, beautiful.app_icon_terminal },
+                                    { "&browser", bin_chromium, beautiful.app_icon_browser },
+                                    { "&vim", bin_gvim, beautiful.app_icon_gvim },
+                                    { "f&pm", bin_fpm2, beautiful.app_icon_fpm },
+                                    { "&file manager", bin_file_mng, beautiful.app_icon_file_mng },
+                                    { "&lock screen", bin_lock_screen, beautiful.app_icon_lock_screen }
                                   }
                         })
 
@@ -359,7 +370,7 @@ globalkeys = awful.util.table.join(
             end),
 
   -- Lock screen with Xscreensaver
-  awful.key({ "Control", Alt_key }, "l", function () awful.util.spawn("xscreensaver-command -lock") end),
+  awful.key({ "Control", Alt_key }, "l", function () awful.util.spawn(bin_lock_screen) end),
   -- Revelation extension bindings
   awful.key({ modkey,            }, "e", revelation)
 )

@@ -122,13 +122,24 @@ theme.titlebar_maximized_button_normal_active = theme.confdir .. "/titlebar/maxi
 theme.titlebar_maximized_button_focus_inactive  = theme.confdir .. "/titlebar/maximized_focus_inactive.png"
 theme.titlebar_maximized_button_normal_inactive = theme.confdir .. "/titlebar/maximized_normal_inactive.png"
 -- }}}
--- }}}
 --
--- Icons
+-- {{{ Icons
 theme.widget_net_down = theme.confdir .. "/widgets/net_down_02.png"
 theme.widget_net_up   = theme.confdir .. "/widgets/net_up_02.png"
 theme.widget_mem      = theme.confdir .. "/widgets/mem.png"
 theme.widget_cpu      = theme.confdir .. "/widgets/cpu.png"
 theme.widget_clock    = theme.confdir .. "/widgets/clock.png"
+-- }}}
+
+-- {{{ App Icons
+theme.app_icon_gvim = theme.confdir .. "/app_icons/gvim.png"
+theme.app_icon_file_mng = theme.confdir .. "/app_icons/file_mng.png"
+theme.app_icon_browser = theme.confdir .. "/app_icons/browser.png"
+theme.app_icon_terminal = theme.confdir .. "/app_icons/terminal.png"
+theme.app_icon_lock_screen = theme.confdir .. "/app_icons/lock_screen.png"
+theme.app_icon_fpm = theme.confdir .. "/app_icons/fpm2.png"
+-- }}}
+--
+-- }}}
 
 return theme
