@@ -75,11 +75,24 @@ layouts =
 
 -- {{{ Tags
 -- Define a tag table which hold all screen tags.
-tags = {}
+tags = {
+  names = { "a", "b", "c", "d" },
+  layouts = { layouts[1], layouts[1], layouts[1], layouts[1] }
+}
+
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag({ 1, 2, 3, 4 }, s, layouts[1])
+    tags[s] = awful.tag(tags.names, s, tags.layouts)
 end
+
+-- tags[1][1]:add_signal("property::selected", function (tag) 
+  -- if awful.tag.selected(1) == tag then
+    -- tag.name = "[" .. tag.name .. "]"
+  -- else
+    -- tag.name = tags.names[1]
+  -- end
+-- end)
+
 -- }}}
 
 -- {{{ Menu
