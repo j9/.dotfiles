@@ -9,6 +9,14 @@ servers = (
   },
   {
     address = "irc.bnc";
+    chatnet = "bnc_oftc";
+    port = "<bnc_oftc_port>";
+    autoconnect = "yes";
+    use_ssl = "yes";
+    password = "<bnc_oftc_pass>";
+  },
+  {
+    address = "irc.bnc";
     chatnet = "bnc_bitlbee";
     port = "<bnc_bitlbee_port>";
     autoconnect = "no";
@@ -33,6 +41,14 @@ chatnets = {
     max_whois = "4";
     max_query_chans = "5";
     username = "<bnc_bitlbee_user>";
+  };
+  bnc_oftc = {
+    type = "IRC";
+    max_kicks = "4";
+    max_msgs = "5";
+    max_whois = "4";
+    max_query_chans = "5";
+    username = "<bnc_oftc_user>";
   };
 };
 
@@ -214,7 +230,10 @@ settings = {
     timestamp_format = "%H:%M:%S";
   };
   "fe-text" = { actlist_sort = "refnum"; };
-  "fe-common/core" = { theme = "fear2"; };
+  "fe-common/core" = {
+    theme = "fear2";
+    activity_hide_level = "JOINS PARTS QUITS MODES";
+  };
   "perl/core/scripts" = {
     nicklist_height = "81";
     nicklist_automode = "FIFO";
@@ -224,41 +243,11 @@ logs = { };
 hilights = ( { text = "janisg"; nick = "yes"; word = "yes"; } );
 windows = {
   1 = { immortal = "yes"; name = "(status)"; level = "ALL"; };
-  2 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#hspace.lv";
-        tag = "bnc";
-      }
-    );
-  };
-  3 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#test_12345";
-        tag = "bnc";
-      }
-    );
-  };
-  4 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#debian";
-        tag = "bnc";
-      }
-    );
-  };
-  5 = { name = "hilight"; sticky = "yes"; };
+  2 = { name = "hilight"; sticky = "yes"; };
 };
 mainwindows = {
   1 = { first_line = "8"; lines = "30"; };
-  5 = { first_line = "1"; lines = "7"; };
+  2 = { first_line = "1"; lines = "7"; };
 };
 keyboard = (
   { key = "meta-prior"; id = "command"; data = "nicklist scroll -10"; },
