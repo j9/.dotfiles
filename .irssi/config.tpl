@@ -228,11 +228,13 @@ settings = {
     user_name = "<user_name>";
     nick = "<nick>";
     timestamp_format = "%H:%M:%S";
+    log_timestamp = "%H:%M:%S ";
   };
   "fe-text" = { actlist_sort = "refnum"; };
   "fe-common/core" = {
     theme = "fear2";
     activity_hide_level = "JOINS PARTS QUITS MODES";
+    autolog = "yes";
   };
   "perl/core/scripts" = {
     nicklist_height = "81";
