@@ -32,6 +32,8 @@ shopt -s histappend
 
 # disable flow control
 stty -ixon
+# disable start/stop characters
+stty -ixoff
 
 hist()
 {
