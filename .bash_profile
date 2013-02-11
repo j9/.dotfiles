@@ -9,6 +9,20 @@ _load_file_if_exists()
   fi
 }
 
+_enable_keychain()
+{
+  KEYCHAIN="/usr/bin/keychain"
+  if [[ -x ${KEYCHAIN} ]] ; then
+    ${KEYCHAIN} --agents ssh --quiet $1
+    . ~/.keychain/$HOSTNAME-sh
+    # no GPG atm
+    # . ~/.keychain/$HOSTNAME-sh-gpg
+  fi
+}
+
+# does what it says
+_enable_keychain ~/.ssh/id_rsa
+
 # to enable '__git_ps1'
 _load_file_if_exists ${HOME}/'.scripts/git-prompt'
 
