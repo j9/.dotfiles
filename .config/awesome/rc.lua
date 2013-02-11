@@ -198,6 +198,15 @@ cpu_info = widget({ type = "textbox" })
 vicious.register(cpu_info, vicious.widgets.cpu, "$1")
 
 
+-- Battery --
+bat_icon = widget({ type = "imagebox" })
+bat_icon.image = image(beautiful.widget_bat)
+bat_icon.align = "middle"
+
+bat_info_perc = widget({type = "textbox" })
+vicious.register(bat_info_perc, vicious.widgets.bat, "$2", 61, "BAT")
+
+
 -- memory related
 mem_icon = widget({ type = "imagebox" })
 mem_icon.image = image(beautiful.widget_mem)
@@ -296,6 +305,12 @@ for s = 1, screen.count() do
 
         sym_rbracket, sym_space,
           mem_info_total, sym_slash, mem_info_used, sym_space, sym_percent, mem_info_perc, mem_icon,
+        sym_lbracket,
+
+        sym_space,
+
+        sym_rbracket, sym_space,
+          sym_percent, bat_info_perc, bat_icon,
         sym_lbracket,
 
         sym_space,
