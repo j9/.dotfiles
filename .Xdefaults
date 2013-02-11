@@ -15,7 +15,7 @@ URxvt.scrollstyle:      plain
 
 
 URxvt.allow_bold:	false
-URxvt.font: 		xft:Monospace:pixelsize=12
+URxvt.font: 		xft:Monospace:pixelsize=10
 
 URxvt.perl-lib: /home/j9/.urxvt/urxvt-perls
 
