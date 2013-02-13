@@ -200,11 +200,41 @@ vicious.register(cpu_info, vicious.widgets.cpu, "$1")
 
 -- Battery --
 bat_icon = widget({ type = "imagebox" })
-bat_icon.image = image(beautiful.widget_bat)
+bat_icon.image = image(beautiful.widget_bat_high)
 bat_icon.align = "middle"
 
 bat_info_perc = widget({type = "textbox" })
-vicious.register(bat_info_perc, vicious.widgets.bat, "$2", 61, "BAT")
+
+bat_t = awful.tooltip({ objects = { bat_info_perc}, })
+bat_t:add_to_object(bat_icon)
+
+vicious.register(bat_info_perc, vicious.widgets.bat, function (widget, args)
+  bat_t:set_text("State: " .. args[1])
+  bat_cap = args[2]
+  if bat_cap > 50 then
+    if bat_cap % 10 == 0 then
+      naughty.notify({ title = "Battery is getting low!",
+                       text = bat_cap .. "% remaining!",
+                       preset = naughty.config.presets.normal,
+                       bg = "#228b22"})
+    end
+    bat_icon.image = image(beautiful.widget_bat_high)
+  elseif bat_cap >= 20 and bat_cap <= 50 then
+    if bat_cap % 10 == 0 then
+      naughty.notify({ title = "Battery is getting low!",
+                       text = bat_cap .. "% remaining!",
+                       preset = naughty.config.presets.normal,
+                       bg = "#b8860b"})
+    end
+    bat_icon.image = image(beautiful.widget_bat_low)
+  else
+    naughty.notify({ title = "Battery is getting low!",
+                     text = bat_cap .. "% remaining!",
+                     preset = naughty.config.presets.critical})
+    bat_icon.image = image(beautiful.widget_bat_empty)
+  end
+  return bat_cap
+  end, 61, "BAT")
 
 
 -- memory related

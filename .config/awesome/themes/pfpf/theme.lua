@@ -124,12 +124,14 @@ theme.titlebar_maximized_button_normal_inactive = theme.confdir .. "/titlebar/ma
 -- }}}
 --
 -- {{{ Icons
-theme.widget_net_down = theme.confdir .. "/widgets/net_down_02.png"
-theme.widget_net_up   = theme.confdir .. "/widgets/net_up_02.png"
-theme.widget_mem      = theme.confdir .. "/widgets/mem.png"
-theme.widget_cpu      = theme.confdir .. "/widgets/cpu.png"
-theme.widget_clock    = theme.confdir .. "/widgets/clock.png"
-theme.widget_bat      = theme.confdir .. "/widgets/bat_full_01.png"
+theme.widget_net_down  = theme.confdir .. "/widgets/net_down_02.png"
+theme.widget_net_up    = theme.confdir .. "/widgets/net_up_02.png"
+theme.widget_mem       = theme.confdir .. "/widgets/mem.png"
+theme.widget_cpu       = theme.confdir .. "/widgets/cpu.png"
+theme.widget_clock     = theme.confdir .. "/widgets/clock.png"
+theme.widget_bat_high  = theme.confdir .. "/widgets/bat_full_01.png"
+theme.widget_bat_low   = theme.confdir .. "/widgets/bat_low_01.png"
+theme.widget_bat_empty = theme.confdir .. "/widgets/bat_empty_01.png"
 -- }}}
 
 -- {{{ App Icons
