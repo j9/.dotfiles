@@ -221,23 +221,21 @@ vicious.register(bat_info_perc, vicious.widgets.bat, function (widget, args)
   bat_cap = args[2]
   bat_state = args[1]
   bat_t:set_text("State: " .. bat_state)
-  if bat_state == "-" then
-    if bat_cap > 50 then
-      if bat_cap % 10 == 0 then
-        bat_notify(bat_state, bat_cap, naughty.config.presets.normal,
-                   "#228b22")
-      end
-      bat_icon.image = image(beautiful.widget_bat_high)
-    elseif bat_cap >= 20 and bat_cap <= 50 then
-      if bat_cap % 10 == 0 then
-        bat_notify(bat_state, bat_cap, naughty.config.presets.normal,
-                   "#b8860b")
-      end
-      bat_icon.image = image(beautiful.widget_bat_low)
-    else
-      bat_notify(bat_state, bat_cap, naughty.config.presets.critical)
-      bat_icon.image = image(beautiful.widget_bat_empty)
+  if bat_cap > 50 then
+    if bat_cap % 10 == 0 then
+      bat_notify(bat_state, bat_cap, naughty.config.presets.normal,
+                 "#228b22")
     end
+    bat_icon.image = image(beautiful.widget_bat_high)
+  elseif bat_cap >= 20 and bat_cap <= 50 then
+    if bat_cap % 10 == 0 then
+      bat_notify(bat_state, bat_cap, naughty.config.presets.normal,
+                 "#b8860b")
+    end
+    bat_icon.image = image(beautiful.widget_bat_low)
+  else
+    bat_notify(bat_state, bat_cap, naughty.config.presets.critical)
+    bat_icon.image = image(beautiful.widget_bat_empty)
   end
   return bat_cap
   end, 61, "BAT")
