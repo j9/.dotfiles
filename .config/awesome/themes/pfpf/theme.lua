@@ -132,6 +132,10 @@ theme.widget_clock     = theme.confdir .. "/widgets/clock.png"
 theme.widget_bat_high  = theme.confdir .. "/widgets/bat_full_01.png"
 theme.widget_bat_low   = theme.confdir .. "/widgets/bat_low_01.png"
 theme.widget_bat_empty = theme.confdir .. "/widgets/bat_empty_01.png"
+theme.widget_note      = theme.confdir .. "/widgets/note.png"
+theme.widget_spkr_01   = theme.confdir .. "/widgets/spkr_01.png"
+theme.widget_spkr_02   = theme.confdir .. "/widgets/spkr_02.png"
+theme.widget_spkr_03   = theme.confdir .. "/widgets/spkr_03.png"
 -- }}}
 
 -- {{{ App Icons

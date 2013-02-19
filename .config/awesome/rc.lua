@@ -12,6 +12,11 @@ require("revelation")
 --local scratch = require("scratch")
 --local quake = require("quake")
 vicious = require("vicious")
+sound = require("sound")
+
+-- module configs
+table.insert(naughty.config.icon_dirs, os.getenv("HOME") ..
+  "/.config/awesome/naughty_icons/")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -205,8 +210,7 @@ bat_icon.align = "middle"
 
 bat_info_perc = widget({type = "textbox" })
 
-bat_t = awful.tooltip({ objects = { bat_info_perc}, })
-bat_t:add_to_object(bat_icon)
+bat_t = awful.tooltip({ objects = { bat_info_perc, bat_icon }, })
 
 bat_notify = function (battery_state, capacity, preset, bg_color)
   if battery_state == "-" then
@@ -434,7 +438,12 @@ globalkeys = awful.util.table.join(
   -- Lock screen with Xscreensaver
   awful.key({ "Control", Alt_key }, "l", function () awful.util.spawn(bin_lock_screen) end),
   -- Revelation extension bindings
-  awful.key({ modkey,            }, "e", revelation)
+  awful.key({ modkey,            }, "e", revelation),
+  
+  -- Sound shortcuts for X86 events keys
+  awful.key({  }, "XF86AudioMute", sound.toggle_mute),
+  awful.key({  }, "XF86AudioLowerVolume", sound.vol_down),
+  awful.key({  }, "XF86AudioRaiseVolume", sound.vol_up)
 )
 
 clientkeys = awful.util.table.join(
@@ -524,6 +533,8 @@ awful.rules.rules = {
     -- Set Firefox to always map on tags number 2 of screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { tag = tags[1][2] } },
+    -- { rule = { class = "Gvim" },
+      -- properties = { tag = tags[1][3] } },
 }
 -- }}}
 
