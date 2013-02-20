@@ -1,5 +1,11 @@
 alias reload_profile='source ~/.bash_profile'
 
+# from http://www.pixelbeat.org/docs/terminal_colours/
+# terminal color fun section
+alias _matrix='tr -c "[:digit:]" " " < /dev/urandom \
+               | dd cbs=$COLUMNS conv=unblock \
+               | GREP_COLOR="1;32" grep --color "[^ ]"'
+
 
 _load_file_if_exists()
 {
