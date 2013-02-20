@@ -9,10 +9,20 @@ _load_file_if_exists()
   fi
 }
 
+_command_exists()
+{
+  command=`which $1 2> /dev/null`
+  if [[ -n ${command} ]] && [[ -x ${command} ]] ; then
+    return 1
+  else
+    return 0
+  fi
+}
+
 _enable_keychain()
 {
-  KEYCHAIN="/usr/bin/keychain"
-  if [[ -x ${KEYCHAIN} ]] ; then
+  KEYCHAIN=`which keychain`
+  if [[ -n ${KEYCHAIN} ]] ; then
     ${KEYCHAIN} --agents ssh --quiet $1
     . ~/.keychain/$HOSTNAME-sh
     # no GPG atm
@@ -20,8 +30,28 @@ _enable_keychain()
   fi
 }
 
+_enable_grc()
+{
+  GRC=`which grc`
+  if [[ -n ${GRC} ]]; then
+    alias colourify="${GRC} -es --colour=auto"
+    alias configure='colourify ./configure'
+    alias diff='colourify diff'
+    alias make='colourify make'
+    alias gcc='colourify gcc'
+    alias g++='colourify g++'
+    alias as='colourify as'
+    # alias gas='colourify gas'
+    alias ld='colourify ld'
+    alias netstat='colourify netstat'
+    alias ping='colourify ping'
+    # alias traceroute='colourify /usr/sbin/traceroute'
+  fi
+}
+
 # does what it says
 _enable_keychain ~/.ssh/id_rsa
+_enable_grc
 
 # to enable '__git_ps1'
 _load_file_if_exists ${HOME}/'.scripts/git-prompt'
