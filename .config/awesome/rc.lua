@@ -80,101 +80,106 @@ layouts =
 -- }}}
 --
 shifty.config.tags = {
-    w1 = {
-        layout    = awful.layout.suit.max,
+    ["1:sys"] = {
+        layout    = awful.layout.suit.fair,
         mwfact    = 0.60,
         exclusive = false,
         position  = 1,
         init      = true,
         screen    = 1,
         slave     = true,
+        spawn     = terminal
     },
-    web = {
+    ["2:vim"] = {
+        layout      = awful.layout.suit.max,
+        mwfact      = 0.70,
+        max_clients = 1,
+        exclusive   = false,
+        position    = 2,
+        slave       = true
+    },
+    ["3:web"] = {
         layout      = awful.layout.suit.tile.bottom,
         mwfact      = 0.65,
         exclusive   = true,
         max_clients = 1,
-        position    = 4,
+        position    = 3,
+        -- init        = true
         -- spawn       = browser,
     },
-    mail = {
-        layout    = awful.layout.suit.tile,
-        mwfact    = 0.55,
-        exclusive = false,
-        position  = 5,
+    ["9:fpm"] = {
+        layout      = awful.layout.suit.tile.bottom,
+        mwfact      = 0.65,
+        exclusive   = true,
+        max_clients = 1,
+        position    = 9,
+    },
+    -- mail = {
+        -- layout    = awful.layout.suit.tile,
+        -- mwfact    = 0.55,
+        -- exclusive = false,
+        -- position  = 3,
         -- spawn     = mail,
-        slave     = true
-    },
-    media = {
-        layout    = awful.layout.suit.float,
-        exclusive = false,
-        position  = 8,
-    },
-    office = {
-        layout   = awful.layout.suit.tile,
-        position = 9,
-    },
+        -- slave     = true
+    -- },
+    -- media = {
+        -- layout    = awful.layout.suit.float,
+        -- exclusive = false,
+        -- position  = 4,
+    -- },
+    -- office = {
+        -- layout   = awful.layout.suit.tile,
+        -- position = 5,
+    -- },
 }
 
 -- SHIFTY: application matching rules
 -- order here matters, early rules will be applied first
 shifty.config.apps = {
     {
-        match = {
-            "Navigator",
-            "Vimperator",
-            "Gran Paradiso",
-        },
-        tag = "web",
+      match = {
+        "gvim",
+      },
+      tag = "2:vim",
     },
     {
-        match = {
-            "Shredder.*",
-            "Thunderbird",
-            "mutt",
-        },
-        tag = "mail",
+      match = {
+        "chromium",
+      },
+      tag = "3:web",
     },
     {
-        match = {
-            "pcmanfm",
-        },
-        slave = true
+      match = {
+        "fpm2",
+      },
+      tag = "9:fpm",
     },
-    {
-        match = {
-            "OpenOffice.*",
-            "Abiword",
-            "Gnumeric",
-        },
-        tag = "office",
-    },
-    {
-        match = {
-            "Mplayer.*",
-            "Mirage",
-            "gimp",
-            "gtkpod",
-            "Ufraw",
-            "easytag",
-        },
-        tag = "media",
-        nopopup = true,
-    },
-    {
-        match = {
-            "MPlayer",
-            "Gnuplot",
-            "galculator",
-        },
-        float = true,
-    },
+    -- {
+        -- match = {
+            -- "Mplayer.*",
+            -- "Mirage",
+            -- "gimp",
+            -- "gtkpod",
+            -- "Ufraw",
+            -- "easytag",
+        -- },
+        -- tag = "media",
+        -- nopopup = true,
+    -- },
+    -- {
+        -- match = {
+            -- "MPlayer",
+            -- "Gnuplot",
+            -- "galculator",
+        -- },
+        -- float = true,
+    -- },
     {
         match = {
             terminal,
         },
         honorsizehints = false,
-        slave = true,
+        slave = false,
     },
     {
         match = {""},
@@ -285,18 +290,18 @@ mytaglist.buttons = awful.util.table.join(
 mytasklist = {}
 mytasklist.buttons = awful.util.table.join(
   awful.button({ }, 1, function (c)
-    if c == client.focus then
-      c.minimized = true
-    else
-      if not c:isvisible() then
-          awful.tag.viewonly(c:tags()[1])
-      end
-      -- This will also un-minimize
-      -- the client, if needed
-      client.focus = c
-      c:raise()
+    -- if c == client.focus then
+      -- c.minimized = true
+    -- else
+    if not c:isvisible() then
+        awful.tag.viewonly(c:tags()[1])
     end
+    -- This will also un-minimize
+    -- the client, if needed
+    client.focus = c
+    c:raise()
     end),
+    -- end),
   awful.button({ }, 3, function ()
     if instance then
       instance:hide()
@@ -434,9 +439,10 @@ sym_slash.text = "/"
 
 for s = 1, screen.count() do
     -- Create a promptbox for each screen
-    mypromptbox[s] = awful.widget.prompt({ layout = awful.widget.layout.horizontal.leftright })
-    -- Create an imagebox widget which will contains an icon indicating which layout we're using.
-    -- We need one layoutbox per screen.
+  mypromptbox[s] = 
+    awful.widget.prompt({ layout = awful.widget.layout.horizontal.leftright })
+  -- Create an imagebox widget which will contains an icon indicating which layout we're using.
+  -- We need one layoutbox per screen.
   mylayoutbox[s] = awful.widget.layoutbox(s)
   mylayoutbox[s]:buttons(awful.util.table.join(
     awful.button({ }, 1, function () awful.layout.inc(layouts, 1) end),
@@ -444,63 +450,63 @@ for s = 1, screen.count() do
     awful.button({ }, 4, function () awful.layout.inc(layouts, 1) end),
     awful.button({ }, 5, function () awful.layout.inc(layouts, -1) end)))
 
-    -- Create a taglist widget
-    mytaglist[s] = awful.widget.taglist(s, 
-                                        awful.widget.taglist.label.all, 
-                                        mytaglist.buttons)
+  -- Create a taglist widget
+  mytaglist[s] = awful.widget.taglist(s, 
+                                      awful.widget.taglist.label.all, 
+                                      mytaglist.buttons)
 
-    -- Create a tasklist widget
-    mytasklist[s] = awful.widget.tasklist(function(c)
-                      return awful.widget.tasklist.label.currenttags(c, s)
-                    end, 
-                                          mytasklist.buttons)
+  -- Create a tasklist widget
+  mytasklist[s] = awful.widget.tasklist(function(c)
+                    return awful.widget.tasklist.label.currenttags(c, s)
+                  end, 
+                                        mytasklist.buttons)
 
-    -- Create the wibox
-    mywibox[s] = awful.wibox({ position = "top", screen = s })
-    -- Add widgets to the wibox - order matters
-    mywibox[s].widgets = {
-        {
-          mylauncher,
-          mytaglist[s],
-          mypromptbox[s],
-          layout = awful.widget.layout.horizontal.leftright
-        },
-        mylayoutbox[s],
-        mytextclock,
-        clock_icon,
+  -- Create the wibox
+  mywibox[s] = awful.wibox({ position = "top", screen = s })
+  -- Add widgets to the wibox - order matters
+  mywibox[s].widgets = {
+      {
+        mylauncher,
+        mytaglist[s],
+        mypromptbox[s],
+        layout = awful.widget.layout.horizontal.leftright
+      },
+      mylayoutbox[s],
+      mytextclock,
+      clock_icon,
+      sym_space,
+
+      sym_rbracket, 
+        cpu_widget.widget,
         sym_space,
+        sym_percent, cpu_info, cpu_icon, 
+      sym_lbracket,
 
-        sym_rbracket, 
-          cpu_widget.widget,
-          sym_space,
-          sym_percent, cpu_info, cpu_icon, 
-        sym_lbracket,
+      sym_space,
 
-        sym_space,
+      sym_rbracket, sym_space,
+        mem_info_total, sym_slash, mem_info_used, sym_space, sym_percent, mem_info_perc, mem_icon,
+      sym_lbracket,
 
-        sym_rbracket, sym_space,
-          mem_info_total, sym_slash, mem_info_used, sym_space, sym_percent, mem_info_perc, mem_icon,
-        sym_lbracket,
+      sym_space,
 
-        sym_space,
+      sym_rbracket, sym_space,
+        sym_percent, bat_info_perc, bat_icon,
+      sym_lbracket,
 
-        sym_rbracket, sym_space,
-          sym_percent, bat_info_perc, bat_icon,
-        sym_lbracket,
+      sym_space,
 
-        sym_space,
+      sym_rbracket, sym_space,
+      net_down_info, net_down_icon,
+      sym_space,
+      net_up_info, net_up_icon,
+      sym_lbracket,
 
-        sym_rbracket, sym_space,
-        net_down_info, net_down_icon,
-        sym_space,
-        net_up_info, net_up_icon,
-        sym_lbracket,
-
-        sym_space,
-        s == 1 and mysystray or nil,
-        mytasklist[s],
-        layout = awful.widget.layout.horizontal.rightleft
-    }
+      sym_space,
+      s == 1 and mysystray or nil,
+      mytasklist[s],
+      layout = awful.widget.layout.horizontal.rightleft
+  }
 end
 -- }}}
 --
@@ -508,8 +514,8 @@ end
 -- SHIFTY: initialize shifty
 -- the assignment of shifty.taglist must always be after its actually
 -- initialized with awful.widget.taglist.new()
-shify.taglist = mytaglist
-shify.init()
+shifty.taglist = mytaglist
+shifty.init()
 
 -- {{{ Mouse bindings
 root.buttons(awful.util.table.join(
@@ -540,7 +546,7 @@ globalkeys = awful.util.table.join(
                 awful.tag.viewonly(t)
             end),
   awful.key({modkey}, "a", shifty.add), -- creat a new tag
-  awful.key({modkey,}, "r", shifty.rename), -- rename a tag
+  awful.key({modkey, Alt_key}, "r", shifty.rename), -- rename a tag
   awful.key({modkey, "Shift"}, "a", -- nopopup new tag
   function()
       shifty.add({nopopup = true})
@@ -710,29 +716,6 @@ clientbuttons = awful.util.table.join(
 
 -- Set keys
 root.keys(globalkeys)
--- }}}
-
--- {{{ Rules
--- awful.rules.rules = {
-    -- All clients will match this rule.
-    -- { rule = { },
-      -- properties = { border_width = beautiful.border_width,
-                     -- border_color = beautiful.border_normal,
-                     -- focus = true,
-                     -- keys = clientkeys,
-                     -- buttons = clientbuttons } },
-    -- { rule = { class = "MPlayer" },
-      -- properties = { floating = true } },
-    -- { rule = { class = "pinentry" },
-      -- properties = { floating = true } },
-    -- { rule = { class = "gimp" },
-      -- properties = { floating = true } },
-    -- Set Firefox to always map on tags number 2 of screen 1.
-    -- { rule = { class = "Firefox" },
-    --   properties = { tag = tags[1][2] } },
-    -- { rule = { class = "Gvim" },
-      -- properties = { tag = tags[1][3] } },
--- }
 -- }}}
 
 -- {{{ Signals
