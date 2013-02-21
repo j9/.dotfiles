@@ -7,3 +7,6 @@
 [submodule ".config/awesome/revelation"]
 	path = .config/awesome/revelation
 	url = https://github.com/bioe007/awesome-revelation.git
+[submodule ".config/awesome/shifty"]
+	path = .config/awesome/shifty
+	url = https://github.com/masterkorp/awesome-shifty
