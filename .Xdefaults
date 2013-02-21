@@ -33,8 +33,10 @@ URxvt.keysym.M-C-v: perl:clipboard:paste_escaped
 URxvt.clipboard.copycmd: xclip -i -selection clipboard
 URxvt.clipboard.pastecmd: xclip -o -selection clipboard
 
+URxvt.keysym.M-u: perl:url-select:select_next
 URxvt.url-select.underline: true
 URxvt.url-select.launcher: chromium
+URxvt.url-select.autocopy: true
 
 
 !! modified Zenburn theme
