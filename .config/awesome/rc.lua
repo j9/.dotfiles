@@ -1,7 +1,7 @@
 -- Standard awesome library
 require("awful")
 require("awful.autofocus")
-require("awful.rules")
+-- require("awful.rules")
 -- Theme handling library
 require("beautiful")
 -- Notification library
@@ -11,8 +11,9 @@ require("revelation")
 -- Custom modules
 --local scratch = require("scratch")
 --local quake = require("quake")
-vicious = require("vicious")
-sound = require("sound")
+local vicious = require("vicious")
+local sound   = require("sound")
+local shifty  = require("shifty")
 
 -- module configs
 table.insert(naughty.config.icon_dirs, os.getenv("HOME") ..
@@ -77,20 +78,149 @@ layouts =
     awful.layout.suit.magnifier
 }
 -- }}}
+--
+shifty.config.tags = {
+    w1 = {
+        layout    = awful.layout.suit.max,
+        mwfact    = 0.60,
+        exclusive = false,
+        position  = 1,
+        init      = true,
+        screen    = 1,
+        slave     = true,
+    },
+    web = {
+        layout      = awful.layout.suit.tile.bottom,
+        mwfact      = 0.65,
+        exclusive   = true,
+        max_clients = 1,
+        position    = 4,
+        -- spawn       = browser,
+    },
+    mail = {
+        layout    = awful.layout.suit.tile,
+        mwfact    = 0.55,
+        exclusive = false,
+        position  = 5,
+        -- spawn     = mail,
+        slave     = true
+    },
+    media = {
+        layout    = awful.layout.suit.float,
+        exclusive = false,
+        position  = 8,
+    },
+    office = {
+        layout   = awful.layout.suit.tile,
+        position = 9,
+    },
+}
+
+-- SHIFTY: application matching rules
+-- order here matters, early rules will be applied first
+shifty.config.apps = {
+    {
+        match = {
+            "Navigator",
+            "Vimperator",
+            "Gran Paradiso",
+        },
+        tag = "web",
+    },
+    {
+        match = {
+            "Shredder.*",
+            "Thunderbird",
+            "mutt",
+        },
+        tag = "mail",
+    },
+    {
+        match = {
+            "pcmanfm",
+        },
+        slave = true
+    },
+    {
+        match = {
+            "OpenOffice.*",
+            "Abiword",
+            "Gnumeric",
+        },
+        tag = "office",
+    },
+    {
+        match = {
+            "Mplayer.*",
+            "Mirage",
+            "gimp",
+            "gtkpod",
+            "Ufraw",
+            "easytag",
+        },
+        tag = "media",
+        nopopup = true,
+    },
+    {
+        match = {
+            "MPlayer",
+            "Gnuplot",
+            "galculator",
+        },
+        float = true,
+    },
+    {
+        match = {
+            terminal,
+        },
+        honorsizehints = false,
+        slave = true,
+    },
+    {
+        match = {""},
+        buttons = awful.util.table.join(
+            awful.button({}, 1, function (c) client.focus = c; c:raise() end),
+            awful.button({modkey}, 1, function(c)
+                client.focus = c
+                c:raise()
+                awful.mouse.client.move(c)
+                end),
+            awful.button({modkey}, 3, awful.mouse.client.resize)
+            )
+    },
+}
+
+-- SHIFTY: default tag creation rules
+-- parameter description
+--  * floatBars : if floating clients should always have a titlebar
+--  * guess_name : should shifty try and guess tag names when creating
+--                 new (unconfigured) tags?
+--  * guess_position: as above, but for position parameter
+--  * run : function to exec when shifty creates a new tag
+--  * all other parameters (e.g. layout, mwfact) follow awesome's tag API
+shifty.config.defaults = {
+    layout = awful.layout.suit.tile.bottom,
+    ncol = 1,
+    mwfact = 0.60,
+    floatBars = true,
+    guess_name = true,
+    guess_position = true,
+}
+
 
 -- {{{ Tags
 -- Define a tag table which hold all screen tags.
-tags = {
-  names = { "a", "b", "c", "d", "e", "f", "g", "h", "j" },
-  layouts = { layouts[1], layouts[1], layouts[1], 
-              layouts[1], layouts[1], layouts[1],
-              layouts[1], layouts[1], layouts[1] }
-}
+-- tags = {
+  -- names = { "a", "b", "c", "d", "e", "f", "g", "h", "j" },
+  -- layouts = { layouts[1], layouts[1], layouts[1], 
+              -- layouts[1], layouts[1], layouts[1],
+              -- layouts[1], layouts[1], layouts[1] }
+-- }
 
-for s = 1, screen.count() do
+-- for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag(tags.names, s, tags.layouts)
-end
+    -- tags[s] = awful.tag(tags.names, s, tags.layouts)
+-- end
 
 -- tags[1][1]:add_signal("property::selected", function (tag) 
   -- if awful.tag.selected(1) == tag then
@@ -146,42 +276,43 @@ mytaglist = {}
 mytaglist.buttons = awful.util.table.join(
                     awful.button({ }, 1, awful.tag.viewonly),
                     awful.button({ modkey }, 1, awful.client.movetotag),
-                    awful.button({ }, 3, awful.tag.viewtoggle),
+                    -- awful.button({ }, 3, awful.tag.viewtoggle),
+                    awful.button({ }, 3, function(tag) tag.selected = not tag.selected end),
                     awful.button({ modkey }, 3, awful.client.toggletag),
                     awful.button({ }, 4, awful.tag.viewnext),
                     awful.button({ }, 5, awful.tag.viewprev)
                     )
 mytasklist = {}
 mytasklist.buttons = awful.util.table.join(
-                     awful.button({ }, 1, function (c)
-                                              if c == client.focus then
-                                                  c.minimized = true
-                                              else
-                                                  if not c:isvisible() then
-                                                      awful.tag.viewonly(c:tags()[1])
-                                                  end
-                                                  -- This will also un-minimize
-                                                  -- the client, if needed
-                                                  client.focus = c
-                                                  c:raise()
-                                              end
-                                          end),
-                     awful.button({ }, 3, function ()
-                                              if instance then
-                                                  instance:hide()
-                                                  instance = nil
-                                              else
-                                                  instance = awful.menu.clients({ width=250 })
-                                              end
-                                          end),
-                     awful.button({ }, 4, function ()
-                                              awful.client.focus.byidx(1)
-                                              if client.focus then client.focus:raise() end
-                                          end),
-                     awful.button({ }, 5, function ()
-                                              awful.client.focus.byidx(-1)
-                                              if client.focus then client.focus:raise() end
-                                          end))
+  awful.button({ }, 1, function (c)
+    if c == client.focus then
+      c.minimized = true
+    else
+      if not c:isvisible() then
+          awful.tag.viewonly(c:tags()[1])
+      end
+      -- This will also un-minimize
+      -- the client, if needed
+      client.focus = c
+      c:raise()
+    end
+    end),
+  awful.button({ }, 3, function ()
+    if instance then
+      instance:hide()
+      instance = nil
+    else
+      instance = awful.menu.clients({ width=250 })
+    end
+    end),
+  awful.button({ }, 4, function ()
+    awful.client.focus.byidx(1)
+    if client.focus then client.focus:raise() end
+    end),
+  awful.button({ }, 5, function ()
+    awful.client.focus.byidx(-1)
+    if client.focus then client.focus:raise() end
+    end))
 
 
 -- Initialize widget
@@ -306,19 +437,23 @@ for s = 1, screen.count() do
     mypromptbox[s] = awful.widget.prompt({ layout = awful.widget.layout.horizontal.leftright })
     -- Create an imagebox widget which will contains an icon indicating which layout we're using.
     -- We need one layoutbox per screen.
-    mylayoutbox[s] = awful.widget.layoutbox(s)
-    mylayoutbox[s]:buttons(awful.util.table.join(
-                           awful.button({ }, 1, function () awful.layout.inc(layouts, 1) end),
-                           awful.button({ }, 3, function () awful.layout.inc(layouts, -1) end),
-                           awful.button({ }, 4, function () awful.layout.inc(layouts, 1) end),
-                           awful.button({ }, 5, function () awful.layout.inc(layouts, -1) end)))
+  mylayoutbox[s] = awful.widget.layoutbox(s)
+  mylayoutbox[s]:buttons(awful.util.table.join(
+    awful.button({ }, 1, function () awful.layout.inc(layouts, 1) end),
+    awful.button({ }, 3, function () awful.layout.inc(layouts, -1) end),
+    awful.button({ }, 4, function () awful.layout.inc(layouts, 1) end),
+    awful.button({ }, 5, function () awful.layout.inc(layouts, -1) end)))
+
     -- Create a taglist widget
-    mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.label.all, mytaglist.buttons)
+    mytaglist[s] = awful.widget.taglist(s, 
+                                        awful.widget.taglist.label.all, 
+                                        mytaglist.buttons)
 
     -- Create a tasklist widget
     mytasklist[s] = awful.widget.tasklist(function(c)
-                                              return awful.widget.tasklist.label.currenttags(c, s)
-                                          end, mytasklist.buttons)
+                      return awful.widget.tasklist.label.currenttags(c, s)
+                    end, 
+                                          mytasklist.buttons)
 
     -- Create the wibox
     mywibox[s] = awful.wibox({ position = "top", screen = s })
@@ -368,12 +503,19 @@ for s = 1, screen.count() do
     }
 end
 -- }}}
+--
+--
+-- SHIFTY: initialize shifty
+-- the assignment of shifty.taglist must always be after its actually
+-- initialized with awful.widget.taglist.new()
+shify.taglist = mytaglist
+shify.init()
 
 -- {{{ Mouse bindings
 root.buttons(awful.util.table.join(
-    awful.button({ }, 3, function () mymainmenu:toggle() end),
-    awful.button({ }, 4, awful.tag.viewnext),
-    awful.button({ }, 5, awful.tag.viewprev)
+  awful.button({ }, 3, function () mymainmenu:toggle() end),
+  awful.button({ }, 4, awful.tag.viewnext),
+  awful.button({ }, 5, awful.tag.viewprev)
 ))
 -- }}}
 --
@@ -383,6 +525,27 @@ globalkeys = awful.util.table.join(
   awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ),
   awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
   awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
+
+  -- Shifty: keybindings specific to shifty
+  awful.key({modkey, "Shift"}, "d", shifty.del), -- delete a tag
+  awful.key({modkey, "Shift"}, "n", shifty.send_prev), -- client to prev tag
+  awful.key({modkey}, "n", shifty.send_next), -- client to next tag
+  awful.key({modkey, "Control"},
+            "n",
+            function()
+                local t = awful.tag.selected()
+                local s = awful.util.cycle(screen.count(), t.screen + 1)
+                awful.tag.history.restore()
+                t = shifty.tagtoscr(s, t)
+                awful.tag.viewonly(t)
+            end),
+  awful.key({modkey}, "a", shifty.add), -- creat a new tag
+  awful.key({modkey,}, "r", shifty.rename), -- rename a tag
+  awful.key({modkey, "Shift"}, "a", -- nopopup new tag
+  function()
+      shifty.add({nopopup = true})
+  end),
+  -- end of Shifty bindings
 
   awful.key({ modkey,           }, "j",
       function ()
@@ -469,44 +632,76 @@ clientkeys = awful.util.table.join(
         end)
 )
 
+-- SHIFTY: assign client keys to shifty for use in
+-- match() function(manage hook)
+shifty.config.clientkeys = clientkeys
+shifty.config.modkey = modkey
+
 -- Compute the maximum number of digit we need, limited to 9
-keynumber = 0
-for s = 1, screen.count() do
-   keynumber = math.min(9, math.max(#tags[s], keynumber));
-end
+for i = 1, (shifty.config.maxtags or 9) do
+  globalkeys = awful.util.table.join(globalkeys,
+    awful.key({modkey}, i, function()
+      local t =  awful.tag.viewonly(shifty.getpos(i))
+      end),
+    awful.key({modkey, "Control"}, i, function()
+      local t = shifty.getpos(i)
+      t.selected = not t.selected
+      end),
+    awful.key({modkey, "Control", "Shift"}, i, function()
+      if client.focus then
+          awful.client.toggletag(shifty.getpos(i))
+      end
+      end),
+    -- move clients to other tags
+    awful.key({modkey, "Shift"}, i, function()
+      if client.focus then
+        t = shifty.getpos(i)
+        awful.client.movetotag(t)
+        awful.tag.viewonly(t)
+      end
+    end))
+  end
+
+
+
+-- Compute the maximum number of digit we need, limited to 9
+-- keynumber = 0
+-- for s = 1, screen.count() do
+   -- keynumber = math.min(9, math.max(#tags[s], keynumber));
+-- end
 
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it works on any keyboard layout.
 -- This should map on the top row of your keyboard, usually 1 to 9.
-for i = 1, keynumber do
-    globalkeys = awful.util.table.join(globalkeys,
-        awful.key({ modkey }, "#" .. i + 9,
-                  function ()
-                        local screen = mouse.screen
-                        if tags[screen][i] then
-                            awful.tag.viewonly(tags[screen][i])
-                        end
-                  end),
-        awful.key({ modkey, "Control" }, "#" .. i + 9,
-                  function ()
-                      local screen = mouse.screen
-                      if tags[screen][i] then
-                          awful.tag.viewtoggle(tags[screen][i])
-                      end
-                  end),
-        awful.key({ modkey, "Shift" }, "#" .. i + 9,
-                  function ()
-                      if client.focus and tags[client.focus.screen][i] then
-                          awful.client.movetotag(tags[client.focus.screen][i])
-                      end
-                  end),
-        awful.key({ modkey, "Control", "Shift" }, "#" .. i + 9,
-                  function ()
-                      if client.focus and tags[client.focus.screen][i] then
-                          awful.client.toggletag(tags[client.focus.screen][i])
-                      end
-                  end))
-end
+-- for i = 1, keynumber do
+    -- globalkeys = awful.util.table.join(globalkeys,
+        -- awful.key({ modkey }, "#" .. i + 9,
+                  -- function ()
+                        -- local screen = mouse.screen
+                        -- if tags[screen][i] then
+                            -- awful.tag.viewonly(tags[screen][i])
+                        -- end
+                  -- end),
+        -- awful.key({ modkey, "Control" }, "#" .. i + 9,
+                  -- function ()
+                      -- local screen = mouse.screen
+                      -- if tags[screen][i] then
+                          -- awful.tag.viewtoggle(tags[screen][i])
+                      -- end
+                  -- end),
+        -- awful.key({ modkey, "Shift" }, "#" .. i + 9,
+                  -- function ()
+                      -- if client.focus and tags[client.focus.screen][i] then
+                          -- awful.client.movetotag(tags[client.focus.screen][i])
+                      -- end
+                  -- end),
+        -- awful.key({ modkey, "Control", "Shift" }, "#" .. i + 9,
+                  -- function ()
+                      -- if client.focus and tags[client.focus.screen][i] then
+                          -- awful.client.toggletag(tags[client.focus.screen][i])
+                      -- end
+                  -- end))
+-- end
 
 clientbuttons = awful.util.table.join(
     awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
@@ -518,26 +713,26 @@ root.keys(globalkeys)
 -- }}}
 
 -- {{{ Rules
-awful.rules.rules = {
+-- awful.rules.rules = {
     -- All clients will match this rule.
-    { rule = { },
-      properties = { border_width = beautiful.border_width,
-                     border_color = beautiful.border_normal,
-                     focus = true,
-                     keys = clientkeys,
-                     buttons = clientbuttons } },
-    { rule = { class = "MPlayer" },
-      properties = { floating = true } },
-    { rule = { class = "pinentry" },
-      properties = { floating = true } },
-    { rule = { class = "gimp" },
-      properties = { floating = true } },
+    -- { rule = { },
+      -- properties = { border_width = beautiful.border_width,
+                     -- border_color = beautiful.border_normal,
+                     -- focus = true,
+                     -- keys = clientkeys,
+                     -- buttons = clientbuttons } },
+    -- { rule = { class = "MPlayer" },
+      -- properties = { floating = true } },
+    -- { rule = { class = "pinentry" },
+      -- properties = { floating = true } },
+    -- { rule = { class = "gimp" },
+      -- properties = { floating = true } },
     -- Set Firefox to always map on tags number 2 of screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { tag = tags[1][2] } },
     -- { rule = { class = "Gvim" },
       -- properties = { tag = tags[1][3] } },
-}
+-- }
 -- }}}
 
 -- {{{ Signals
