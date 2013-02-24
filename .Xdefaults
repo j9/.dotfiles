@@ -13,6 +13,8 @@ URxvt.pointerBlank:	true
 URxvt.scrollBar:	true
 URxvt.scrollstyle:      plain
 
+URxvt.saveLines: 65535
+
 
 URxvt.allow_bold:	false
 URxvt.font: 		xft:Monospace:pixelsize=10
