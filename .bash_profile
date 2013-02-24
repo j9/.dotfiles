@@ -55,9 +55,13 @@ _enable_grc()
   fi
 }
 
-# does what it says
-_enable_keychain ~/.ssh/id_rsa
-_enable_grc
+# startup script loading
+if [[ ${EUID} == 0 ]] ; then
+  _enable_grc
+else
+  _enable_keychain ~/.ssh/id_rsa
+  _enable_grc
+fi
 
 # to enable '__git_ps1'
 _load_file_if_exists ${HOME}/'.scripts/git-prompt'
