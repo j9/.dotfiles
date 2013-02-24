@@ -54,6 +54,8 @@ terminal = "urxvt"
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
 
+tmux_terminal = os.getenv("HOME") .. "/.scripts/main_terminal.sh"
+
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
 -- If you do not like this or do not have such a key,
@@ -89,7 +91,7 @@ shifty.config.tags = {
         init      = true,
         screen    = 1,
         slave     = true,
-        -- spawn     = terminal
+        spawn     = tmux_terminal
     },
     ["2:vim"] = {
         layout      = awful.layout.suit.max,
@@ -108,6 +110,12 @@ shifty.config.tags = {
         -- init        = true
         -- spawn       = browser,
     },
+    ["4:irc"] = {
+        layout    = awful.layout.suit.float,
+        exclusive = true,
+        position  = 4,
+        slave     = true,
+    },
     ["9:fpm"] = {
         layout      = awful.layout.suit.tile.bottom,
         mwfact      = 0.65,
@@ -122,15 +130,6 @@ shifty.config.tags = {
         -- position  = 3,
         -- spawn     = mail,
         -- slave     = true
-    -- },
-    -- media = {
-        -- layout    = awful.layout.suit.float,
-        -- exclusive = false,
-        -- position  = 4,
-    -- },
-    -- office = {
-        -- layout   = awful.layout.suit.tile,
-        -- position = 5,
     -- },
 }
 
@@ -175,6 +174,18 @@ shifty.config.apps = {
         -- },
         -- float = true,
     -- },
+    {
+      match = {
+        "irc",
+      },
+      tag = "4:irc",
+    },
+    {
+      match = {
+        "main_terminal",
+      },
+      tag = "1:sys",
+    },
     {
         match = {
             terminal,
