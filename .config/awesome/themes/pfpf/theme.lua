@@ -136,6 +136,7 @@ theme.widget_note      = theme.confdir .. "/widgets/note.png"
 theme.widget_spkr_01   = theme.confdir .. "/widgets/spkr_01.png"
 theme.widget_spkr_02   = theme.confdir .. "/widgets/spkr_02.png"
 theme.widget_spkr_03   = theme.confdir .. "/widgets/spkr_03.png"
+theme.widget_warrior   = theme.confdir .. "/widgets/task_warrior.png"
 -- }}}
 
 -- {{{ App Icons
@@ -145,6 +146,10 @@ theme.app_icon_browser = theme.confdir .. "/app_icons/browser.png"
 theme.app_icon_terminal = theme.confdir .. "/app_icons/terminal.png"
 theme.app_icon_lock_screen = theme.confdir .. "/app_icons/lock_screen.png"
 theme.app_icon_fpm = theme.confdir .. "/app_icons/fpm2.png"
+
+theme.task_warrior_icon_task_done = theme.confdir .. "/app_icons/task_done.png"
+theme.task_warrior_icon_task = theme.confdir .. "/app_icons/task.png"
+theme.task_warrior_icon_project = theme.confdir .. "/app_icons/project.png"
 -- }}}
 --
 -- }}}

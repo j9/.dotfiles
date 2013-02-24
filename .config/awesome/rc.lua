@@ -7,6 +7,7 @@ require("beautiful")
 -- Notification library
 require("naughty")
 require("revelation")
+require("blingbling")
 
 -- Custom modules
 --local scratch = require("scratch")
@@ -88,7 +89,7 @@ shifty.config.tags = {
         init      = true,
         screen    = 1,
         slave     = true,
-        spawn     = terminal
+        -- spawn     = terminal
     },
     ["2:vim"] = {
         layout      = awful.layout.suit.max,
@@ -340,6 +341,11 @@ cpu_icon.align = "middle"
 cpu_info = widget({ type = "textbox" })
 vicious.register(cpu_info, vicious.widgets.cpu, "$1")
 
+-- Task warrior widget --
+task_warrior = blingbling.task_warrior.new(beautiful.widget_warrior)
+task_warrior:set_task_done_icon(beautiful.task_warrior_icon_task_done)
+task_warrior:set_task_icon(beautiful.task_warrior_icon_task)
+task_warrior:set_project_icon(beautiful.task_warrior_icon_project)
 
 -- Battery --
 bat_icon = widget({ type = "imagebox" })
@@ -501,6 +507,8 @@ for s = 1, screen.count() do
       sym_space,
       net_up_info, net_up_icon,
       sym_lbracket,
+
+      task_warrior.widget,
 
       sym_space,
       s == 1 and mysystray or nil,

@@ -10,3 +10,6 @@
 [submodule ".config/awesome/shifty"]
 	path = .config/awesome/shifty
 	url = https://github.com/masterkorp/awesome-shifty
+[submodule ".config/awesome/blingbling"]
+	path = .config/awesome/blingbling
+	url = git://github.com/cedlemo/blingbling.git
