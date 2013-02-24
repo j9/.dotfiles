@@ -13,3 +13,4 @@
 [submodule ".config/awesome/blingbling"]
 	path = .config/awesome/blingbling
 	url = git://github.com/cedlemo/blingbling.git
+  ignore = dirty
