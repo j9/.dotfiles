@@ -1,4 +1,6 @@
 alias reload_profile='source ~/.bash_profile'
+alias ".."="cd .."
+alias "..."="cd ../.."
 
 # from http://www.pixelbeat.org/docs/terminal_colours/
 # terminal color fun section
