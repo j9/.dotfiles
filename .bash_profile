@@ -45,7 +45,8 @@ _enable_grc()
     alias colourify="${GRC} -es --colour=auto"
     alias configure='colourify ./configure'
     alias diff='colourify diff'
-    alias make='colourify make'
+    # problematic with kernel 'menuconfig'
+    # alias make='colourify make'
     alias gcc='colourify gcc'
     alias g++='colourify g++'
     alias as='colourify as'
