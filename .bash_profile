@@ -83,11 +83,9 @@ _enable_man_colors()
   export LESS_TERMCAP_ZO=$(tput ssupm)
   export LESS_TERMCAP_ZW=$(tput rsupm)
 
-  export LESS=-r
   # more on grotty(1)
   export GROFF_NO_SGR=1
 }
-
 
 
 # startup script loading
@@ -165,7 +163,6 @@ _prompt_command()
   history -n
 }
 
-
 _ps1()
 {
   if [[ ${EUID} == 0 ]] ; then
@@ -192,6 +189,5 @@ ${PROMPT_COLOR}\\$ ${DFLT_COLOR}"
 # prompt
 export PROMPT_COMMAND=$(_prompt_command)
 export PS1=$(_ps1)
-
 
 _load_file_if_exists ${HOME}/'.bashrc'
