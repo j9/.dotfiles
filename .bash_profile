@@ -1,6 +1,6 @@
 alias reload_profile='source ~/.bash_profile'
-alias ".."="cd .."
-alias "..."="cd ../.."
+alias ".."='cd ..'
+alias "..."='cd ../..'
 
 # from http://www.pixelbeat.org/docs/terminal_colours/
 # terminal color fun section
@@ -58,12 +58,46 @@ _enable_grc()
   fi
 }
 
+_enable_man_colors()
+{
+  # another man color theme
+  # export LESS_TERMCAP_mb=$'\E[01;31m'
+  # export LESS_TERMCAP_md=$'\E[01;31m'
+  # export LESS_TERMCAP_me=$'\E[0m'
+  # export LESS_TERMCAP_se=$'\E[0m'
+  # export LESS_TERMCAP_so=$'\E[01;47;34m'
+  # export LESS_TERMCAP_ue=$'\E[0m'
+  # export LESS_TERMCAP_us=$'\E[01;32m'
+
+  export LESS_TERMCAP_mb=$(tput bold; tput setaf 2) # green
+  export LESS_TERMCAP_md=$(tput bold; tput setaf 6) # cyan
+  export LESS_TERMCAP_me=$(tput sgr0)
+  export LESS_TERMCAP_so=$(tput bold; tput setaf 3; tput setab 4) # yellow on blue
+  export LESS_TERMCAP_se=$(tput rmso; tput sgr0)
+  export LESS_TERMCAP_us=$(tput smul; tput bold; tput setaf 7) # white
+  export LESS_TERMCAP_ue=$(tput rmul; tput sgr0)
+  export LESS_TERMCAP_mr=$(tput rev)
+  export LESS_TERMCAP_mh=$(tput dim)
+  export LESS_TERMCAP_ZN=$(tput ssubm)
+  export LESS_TERMCAP_ZV=$(tput rsubm)
+  export LESS_TERMCAP_ZO=$(tput ssupm)
+  export LESS_TERMCAP_ZW=$(tput rsupm)
+
+  export LESS=-r
+  # more on grotty(1)
+  export GROFF_NO_SGR=1
+}
+
+
+
 # startup script loading
 if [[ ${EUID} == 0 ]] ; then
   _enable_grc
+  _enable_man_colors
 else
   _enable_keychain ~/.ssh/id_rsa
   _enable_grc
+  _enable_man_colors
 fi
 
 # to enable '__git_ps1'
