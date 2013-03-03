@@ -102,9 +102,9 @@ shifty.config.tags = {
         slave       = true
     },
     ["3:web"] = {
-        layout      = awful.layout.suit.tile.bottom,
-        mwfact      = 0.65,
-        exclusive   = true,
+        layout      = awful.layout.suit.float,
+        -- required for flash fullscreen
+        exclusive   = false,
         max_clients = 1,
         position    = 3,
         -- init        = true
@@ -171,6 +171,7 @@ shifty.config.apps = {
             -- "MPlayer",
             -- "Gnuplot",
             -- "galculator",
+            -- "Exe",
         -- },
         -- float = true,
     -- },
