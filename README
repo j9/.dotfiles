@@ -12,3 +12,7 @@ When testing dotfile linking, this might become handy:
   $ find -L . -type l -delete
 
 Find and remove all broken links in current directory and all subdirectories.
+
+Switching monitors with xrandr
+----------------------------------
+xrandr --output LVDS1 --off --output VGA1 --mode 1680x1050 --rate 60 --primary
