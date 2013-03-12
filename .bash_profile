@@ -27,6 +27,21 @@ _command_exists()
   fi
 }
 
+_enable_virsh_aliases()
+{
+  virsh_base_cmd='virsh -c qemu:///system'
+  alias v="${virsh_base_cmd}"
+  alias vl="${virsh_base_cmd} list"
+  alias vla="${virsh_base_cmd} list --all"
+  alias vdx="${virsh_base_cmd} dumpxml"
+  alias ve="${virsh_base_cmd} edit"
+  alias vs="${virsh_base_cmd} start"
+  alias vd="${virsh_base_cmd} destroy"
+  alias vnl="${virsh_base_cmd} net-list"
+  alias vnla="${virsh_base_cmd} net-list --all"
+  alias vne="${virsh_base_cmd} net-edit"
+}
+
 _enable_keychain()
 {
   KEYCHAIN=`which keychain`
@@ -97,6 +112,8 @@ else
   _enable_grc
   _enable_man_colors
 fi
+
+_enable_virsh_aliases
 
 # to enable '__git_ps1'
 _load_file_if_exists ${HOME}/'.scripts/git-prompt'
