@@ -40,6 +40,7 @@ _enable_virsh_aliases()
   alias vnl="${virsh_base_cmd} net-list"
   alias vnla="${virsh_base_cmd} net-list --all"
   alias vne="${virsh_base_cmd} net-edit"
+  alias vndx="${virsh_base_cmd} net-dumpxml"
 }
 
 _enable_keychain()
