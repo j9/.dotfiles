@@ -116,6 +116,9 @@ fi
 
 _enable_virsh_aliases
 
+# ip netns shortcut helpers
+_load_file_if_exists ${HOME}/'.scripts/ip_ns_helper'
+
 # to enable '__git_ps1'
 _load_file_if_exists ${HOME}/'.scripts/git-prompt'
 

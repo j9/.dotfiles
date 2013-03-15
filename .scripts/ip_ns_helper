@@ -1,0 +1,50 @@
+# ip namespace switching helper
+#
+# available commands
+# 1) ipnl 
+#    list namespaces, sames as 'ip netns', but with additional
+#    namespace numbers for usage in 'ipne'
+# 2) ipne <ns_index> <cmd>
+#    execute command in namespace; <ns_index> is the index from 'ipnl',
+#    <cmd> is the command to execute in namespace <ns_index>;
+#    if no <cmd> is given, bash is executed in ns
+#
+
+prefix=''
+
+if [ ${EUID} -ne 0 ]; then
+  prefix='sudo'
+fi;
+
+function ipnl()
+{
+  ${prefix} ip netns list | nl
+  return 0
+}
+
+
+function ipne()
+{
+  if [ -z $1 ]; then
+    return ipnl
+    return 0
+  fi;
+
+  ns_num=$( expr $1 - 1 )
+  ns_command="${@: 2}"
+  # ------------------------
+  default_exec='bash'
+  ns_list_cmd=`${prefix} ip netns list`
+  read -a all_ip_ns <<< ${ns_list_cmd}
+  selected_ns=${all_ip_ns[$ns_num]}
+  if [ -z ${selected_ns} ]; then
+    echo "no ns found with index ${ns_num}"
+    return 1
+  fi;
+
+  if [ -z "$ns_command" ]; then
+    ns_command=${default_exec}
+  fi;
+
+  ${prefix} ip netns exec ${selected_ns} ${ns_command}
+}
