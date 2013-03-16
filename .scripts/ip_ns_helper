@@ -26,7 +26,7 @@ function ipnl()
 function ipne()
 {
   if [ -z $1 ]; then
-    return ipnl
+    ipnl
     return 0
   fi;
 
