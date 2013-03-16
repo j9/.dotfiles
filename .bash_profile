@@ -116,6 +116,9 @@ fi
 
 _enable_virsh_aliases
 
+# run latest ansible from git checkout
+_load_file_if_exists ${HOME}/'soft/ansible/hacking/env-setup' 2>&1 > /dev/null
+
 # ip netns shortcut helpers
 _load_file_if_exists ${HOME}/'.scripts/ip_ns_helper'
 
