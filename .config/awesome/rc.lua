@@ -110,10 +110,16 @@ shifty.config.tags = {
         -- init        = true
         -- spawn       = browser,
     },
-    ["4:irc"] = {
+    ["4:TeX"] = {
         layout    = awful.layout.suit.float,
         exclusive = true,
         position  = 4,
+        slave     = true,
+    },
+    ["5:irc"] = {
+        layout    = awful.layout.suit.float,
+        exclusive = true,
+        position  = 5,
         slave     = true,
     },
     ["9:fpm"] = {
@@ -179,7 +185,7 @@ shifty.config.apps = {
       match = {
         "irc",
       },
-      tag = "4:irc",
+      tag = "5:irc",
     },
     {
       match = {
