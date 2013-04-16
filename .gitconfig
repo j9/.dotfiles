@@ -14,7 +14,13 @@
   st = status
   df = diff
   br = branch
+  ft = fetch
   lastlog = log --pretty=format:'%Cblue%h%Creset c:%Cred%cn%Creset a:%Cred%an%Creset %Cgreen%s%Creset %ar' -n 10
   who = shortlog -e -s -n 
+
+# copied from SO http://stackoverflow.com/questions/1057564/pretty-git-branch-graphs
+  lg1 = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold white)— %an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative
+  lg2 = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(bold white)— %an%C(reset)' --abbrev-commit
+  lg = !"git lg1"
 [merge]
   conflictstyle = diff3
