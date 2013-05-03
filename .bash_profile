@@ -47,7 +47,7 @@ _enable_keychain()
 {
   KEYCHAIN=`which keychain`
   if [[ -n ${KEYCHAIN} ]] ; then
-    ${KEYCHAIN} --agents ssh --quiet $1
+    ${KEYCHAIN} --timeout 600 --agents ssh --quiet $1
     . ~/.keychain/$HOSTNAME-sh
     # no GPG atm
     # . ~/.keychain/$HOSTNAME-sh-gpg
@@ -109,7 +109,7 @@ if [[ ${EUID} == 0 ]] ; then
   _enable_grc
   _enable_man_colors
 else
-  _enable_keychain ~/.ssh/id_rsa
+  _enable_keychain "`ls ~/.ssh/ssh_* | grep -v pub`"
   _enable_grc
   _enable_man_colors
 fi
