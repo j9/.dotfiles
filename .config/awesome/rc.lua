@@ -11,7 +11,7 @@ require("blingbling")
 
 -- Custom modules
 --local scratch = require("scratch")
---local quake = require("quake")
+local quake = require("quake")
 local vicious = require("vicious")
 local sound   = require("sound")
 local shifty  = require("shifty")
@@ -111,8 +111,9 @@ shifty.config.tags = {
         -- spawn       = browser,
     },
     ["4:TeX"] = {
-        layout    = awful.layout.suit.float,
-        exclusive = true,
+        layout    = awful.layout.suit.tile,
+        mwfact    = 0.50,
+        exclusive = false,
         position  = 4,
         slave     = true,
     },
@@ -159,6 +160,10 @@ shifty.config.apps = {
         "fpm2",
       },
       tag = "9:fpm",
+    },
+    {
+      match = {"latex",},
+      tag = "4:TeX",
     },
     -- {
         -- match = {
@@ -283,6 +288,14 @@ mymainmenu = awful.menu({ items = { { "&awesome", myawesomemenu, beautiful.aweso
 
 mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
                                      menu = mymainmenu })
+
+
+local quakeconsole = {}
+for s = 1, screen.count() do
+   quakeconsole[s] = quake({ terminal = terminal,
+           height = 0.5,
+           screen = s })
+end
 -- }}}
 
 -- {{{ Wibox
@@ -640,7 +653,10 @@ globalkeys = awful.util.table.join(
   -- Sound shortcuts for X86 events keys
   awful.key({  }, "XF86AudioMute", sound.toggle_mute),
   awful.key({  }, "XF86AudioLowerVolume", sound.vol_down),
-  awful.key({  }, "XF86AudioRaiseVolume", sound.vol_up)
+  awful.key({  }, "XF86AudioRaiseVolume", sound.vol_up),
+
+  -- Quake console
+  awful.key({ modkey }, "`", function () quakeconsole[mouse.screen]:toggle() end)
 )
 
 clientkeys = awful.util.table.join(
