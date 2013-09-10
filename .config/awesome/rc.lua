@@ -7,7 +7,7 @@ require("beautiful")
 -- Notification library
 require("naughty")
 require("revelation")
-require("blingbling")
+-- require("blingbling")
 
 -- Custom modules
 --local scratch = require("scratch")
@@ -283,7 +283,7 @@ bin_fpm2        = "fpm2"
 
 mymainmenu = awful.menu({ items = { { "&awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "&terminal", terminal, beautiful.app_icon_terminal },
-                                    { "&browser", bin_browser, beautiful.app_icon_browser },
+                                    { "&browser", bin_browser, beautiful.app_icon_firefox },
                                     { "&vim", bin_gvim, beautiful.app_icon_gvim },
                                     { "f&pm", bin_fpm2, beautiful.app_icon_fpm },
                                     { "&file manager", bin_file_mng, beautiful.app_icon_file_mng },
@@ -378,10 +378,10 @@ cpu_info = widget({ type = "textbox" })
 vicious.register(cpu_info, vicious.widgets.cpu, "$1")
 
 -- Task warrior widget --
-task_warrior = blingbling.task_warrior.new(beautiful.widget_warrior)
-task_warrior:set_task_done_icon(beautiful.task_warrior_icon_task_done)
-task_warrior:set_task_icon(beautiful.task_warrior_icon_task)
-task_warrior:set_project_icon(beautiful.task_warrior_icon_project)
+-- task_warrior = blingbling.task_warrior.new(beautiful.widget_warrior)
+-- task_warrior:set_task_done_icon(beautiful.task_warrior_icon_task_done)
+-- task_warrior:set_task_icon(beautiful.task_warrior_icon_task)
+-- task_warrior:set_project_icon(beautiful.task_warrior_icon_project)
 
 -- Battery --
 bat_icon = widget({ type = "imagebox" })
@@ -544,7 +544,7 @@ for s = 1, screen.count() do
       net_up_info, net_up_icon,
       sym_lbracket,
 
-      task_warrior.widget,
+      -- task_warrior.widget,
 
       sym_space,
       s == 1 and mysystray or nil,
