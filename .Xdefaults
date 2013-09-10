@@ -37,7 +37,6 @@ URxvt.clipboard.pastecmd: xclip -o -selection clipboard
 
 URxvt.keysym.M-u: perl:url-select:select_next
 URxvt.url-select.underline: true
-URxvt.url-select.launcher: chromium
 URxvt.url-select.launcher: firefox-bin -new-tab
 URxvt.url-select.autocopy: true
 
