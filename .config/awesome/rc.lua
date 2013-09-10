@@ -151,7 +151,7 @@ shifty.config.apps = {
     },
     {
       match = {
-        "chromium",
+        "Firefox.*",
       },
       tag = "3:web",
     },
@@ -271,14 +271,19 @@ myawesomemenu = {
 }
 
 bin_gvim        = "gvim"
+
+-- browser selection
 bin_chromium    = "chromium"
+bin_firefox     = "firefox-bin"
+bin_browser     = bin_firefox
+
 bin_lock_screen = "xscreensaver-command -lock"
 bin_file_mng    = "pcmanfm ~"
 bin_fpm2        = "fpm2"
 
 mymainmenu = awful.menu({ items = { { "&awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "&terminal", terminal, beautiful.app_icon_terminal },
-                                    { "&browser", bin_chromium, beautiful.app_icon_browser },
+                                    { "&browser", bin_browser, beautiful.app_icon_browser },
                                     { "&vim", bin_gvim, beautiful.app_icon_gvim },
                                     { "f&pm", bin_fpm2, beautiful.app_icon_fpm },
                                     { "&file manager", bin_file_mng, beautiful.app_icon_file_mng },
