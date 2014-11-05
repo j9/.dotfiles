@@ -47,10 +47,9 @@ _enable_keychain()
 {
   KEYCHAIN=`which keychain`
   if [[ -n ${KEYCHAIN} ]] ; then
-    ${KEYCHAIN} --timeout 600 --agents ssh --quiet $1
+    ${KEYCHAIN} --timeout 600 --agents "ssh,gpg" --quiet $1
     . ~/.keychain/$HOSTNAME-sh
-    # no GPG atm
-    # . ~/.keychain/$HOSTNAME-sh-gpg
+    . ~/.keychain/$HOSTNAME-sh-gpg
   fi
 }
 
